@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { google } = require('googleapis');
+const fs = require('fs');
 
 const app = express();
 
@@ -9,9 +10,26 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// Decodifica la credencial en Base64 y genera credentials.json
+const credentialsBase64 = process.env.GOOGLE_CREDENTIALS_BASE64;
+
+if (!credentialsBase64) {
+    console.error("Error: No se encontró la variable GOOGLE_CREDENTIALS_BASE64 en las variables de entorno.");
+    process.exit(1);
+}
+
+try {
+    const credentials = Buffer.from(credentialsBase64, 'base64').toString('utf-8');
+    fs.writeFileSync('credentials.json', credentials);
+    console.log('Archivo credentials.json creado exitosamente.');
+} catch (error) {
+    console.error('Error al escribir el archivo credentials.json:', error.message);
+    process.exit(1);
+}
+
 // Configuración de autenticación para Google Sheets
 const auth = new google.auth.GoogleAuth({
-    keyFile: 'credentials.json', // Asegúrate de tener este archivo JSON de la cuenta de servicio
+    keyFile: 'credentials.json', // Usará el archivo generado dinámicamente
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
@@ -60,9 +78,8 @@ app.post('/send-form', async (req, res) => {
     }
 });
 
-
 // Servidor corriendo
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
