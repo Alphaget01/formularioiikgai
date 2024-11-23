@@ -1,11 +1,12 @@
 {
-  "dependencies": {
-    "axios": "^1.7.7",
-    "body-parser": "^1.20.3",
-    "cors": "^2.8.5",
-    "express": "^4.21.1",
-    "googleapis": "^144.0.0"
-  },
+"dependencies": {
+  "axios": "^1.7.7",
+  "body-parser": "^1.20.3",
+  "cors": "^2.8.5",
+  "express": "^4.21.1",
+  "googleapis": "^144.0.0",
+  "dotenv": "^16.0.3"
+},
   "name": "formulario",
   "version": "1.0.0",
   "description": "Este proyecto es un formulario de contacto que permite a los usuarios enviar sus datos y almacenarlos en Google Sheets mediante un backend desarrollado con Google Apps Script.",
