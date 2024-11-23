@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario para subir a IkigaiMangas</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Contenedor del logo -->
+    <div class="logo-container">
+        <img src="logoikigai.png" alt="Logo Ikigai" class="logo">
+    </div>
+
+    <!-- Contenedor del formulario -->
+    <div class="form-container">
+        <h1>Formulario para subir a IkigaiMangas</h1>
+        <form id="ikigai-form" novalidate>
+            <!-- Nombre del grupo -->
+            <div class="form-group">
+                <label for="nombre-grupo">Nombre del grupo</label>
+                <input type="text" id="nombre-grupo" name="nombre-grupo" placeholder="Ingresa el nombre del grupo" required>
+                <span class="error-message">Por favor ingresa el nombre del grupo.</span>
+            </div>
+
+            <!-- Link del grupo -->
+            <div class="form-group">
+                <label for="grupo">Grupo (TMO, Facebook, Mangadex, etc.)</label>
+                <input type="url" id="grupo" name="grupo" placeholder="Ingresa el link del grupo (https://...)" pattern="https?://.+" required>
+                <span class="error-message">Por favor coloca un link válido que inicie con "https://".</span>
+            </div>
+
+            <!-- Usuario de Discord -->
+            <div class="form-group">
+                <label for="discord">Usuario de Discord</label>
+                <input type="text" id="discord" name="discord" placeholder="Ingresa tu usuario de Discord" required>
+                <span class="error-message">Este campo es obligatorio.</span>
+            </div>
+
+            <!-- Correo -->
+            <div class="form-group">
+                <label for="correo">Correo (@gmail)</label>
+                <input type="email" id="correo" name="correo" placeholder="Ingresa tu correo electrónico" pattern="[a-zA-Z0-9._%+-]+@gmail\\.com" required>
+                <span class="error-message">Por favor ingresa un correo @gmail válido.</span>
+            </div>
+
+            <!-- Tipos de obras -->
+            <div class="form-group checkbox-group">
+                <label>Tipos de obras</label>
+                <div>
+                    <label><input type="checkbox" name="obras" value="Manhwas"> Manhwas</label>
+                    <label><input type="checkbox" name="obras" value="Mangas"> Mangas</label>
+                    <label><input type="checkbox" name="obras" value="Manhuas"> Manhuas</label>
+                    <label><input type="checkbox" name="obras" value="Novela"> Novela</label>
+                    <label><input type="checkbox" name="obras" value="One Shot"> One Shot</label>
+                    <label><input type="checkbox" name="obras" value="Doujinshi"> Doujinshi</label>
+                </div>
+                <span class="error-message">Elige al menos una opción.</span>
+            </div>
+
+            <!-- Géneros -->
+            <div class="form-group checkbox-group">
+                <label>Géneros que trabajan</label>
+                <div>
+                    <label><input type="checkbox" name="generos" value="Seinen"> Seinen</label>
+                    <label><input type="checkbox" name="generos" value="Shoujo"> Shoujo</label>
+                    <label><input type="checkbox" name="generos" value="Shounen"> Shounen</label>
+                    <label><input type="checkbox" name="generos" value="Josei"> Josei</label>
+                    <label><input type="checkbox" name="generos" value="Kodomo"> Kodomo</label>
+                </div>
+                <span class="error-message">Elige al menos un género.</span>
+            </div>
+
+            <!-- Capítulos promedio -->
+            <div class="form-group checkbox-group">
+                <label>¿Cuántos capítulos promedio puede hacer tu scan al mes?</label>
+                <div>
+                    <label><input type="checkbox" name="capitulos" value="1-10 Capítulos"> 1-10 Capítulos</label>
+                    <label><input type="checkbox" name="capitulos" value="1-30 Capítulos"> 1-30 Capítulos</label>
+                    <label><input type="checkbox" name="capitulos" value="1-50 Capítulos"> 1-50 Capítulos</label>
+                    <label><input type="checkbox" name="capitulos" value="+100 Capítulos"> +100 Capítulos</label>
+                </div>
+                <span class="error-message">Elige al menos una opción.</span>
+            </div>
+
+            <!-- Botón de enviar -->
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <!-- Archivo JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

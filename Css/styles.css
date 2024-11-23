@@ -1,0 +1,143 @@
+/* Estilo del fondo con capa gris */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('../fondoformuikigai.png') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+}
+
+/* Contenedor del logo */
+.logo-container {
+    position: absolute;
+    top: 10px; /* Reducido para aprovechar espacio */
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 5px; /* Reducido */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    width: 120px; /* Reducido */
+    display: block;
+}
+
+/* Contenedor del formulario */
+.form-container {
+    max-width: 500px; /* Más compacto */
+    margin: 20px auto; /* Reducido */
+    padding: 15px; /* Reducido */
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 14px; /* Reducción general del texto */
+}
+
+.form-container h1 {
+    text-align: center;
+    margin-bottom: 10px; /* Reducido */
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px; /* Reducido */
+}
+
+/* Grupos de campos */
+.form-group {
+    margin-bottom: 10px; /* Reducido */
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 8px; /* Reducido */
+    border-radius: 5px;
+    position: relative; /* Para los mensajes de error */
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 3px; /* Reducido */
+    color: black;
+}
+
+/* Ajustes de entradas */
+input, textarea, select {
+    width: 100%;
+    padding: 8px; /* Reducido */
+    margin-top: 3px; /* Reducido */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px; /* Reducido */
+    box-sizing: border-box;
+}
+
+/* Mensajes de error */
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid red;
+    position: static; /* Cambiado para mantener alineación debajo del campo */
+}
+
+/* Mensajes para casillas */
+.checkbox-group .error-message,
+.radio-group .error-message {
+    margin-top: 10px; /* Más espacio entre casillas y el mensaje */
+    position: static; /* Asegura que aparezca después del grupo */
+}
+
+/* Ajustes de alineación para las casillas */
+.checkbox-group, .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Reducido */
+}
+
+.checkbox-group label, .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px; /* Reducido */
+}
+
+input[type="checkbox"], input[type="radio"] {
+    flex-shrink: 0;
+    width: 18px; /* Reducido */
+    height: 18px; /* Reducido */
+    margin: 0;
+}
+
+/* Botón de enviar */
+button {
+    width: 100%;
+    background-color: #000;
+    color: white;
+    padding: 10px; /* Reducido */
+    font-size: 14px; /* Reducido */
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #333;
+}
