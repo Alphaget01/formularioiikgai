@@ -3,12 +3,21 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const { google } = require('googleapis');
 const fs = require('fs');
+const path = require('path');
 
 const app = express();
 
 // Configuración de middlewares
 app.use(cors());
 app.use(bodyParser.json());
+
+// Servir archivos estáticos desde el directorio raíz (para CSS, JS, imágenes, etc.)
+app.use(express.static(path.join(__dirname)));
+
+// Servir index.html en la raíz "/"
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Decodifica la credencial en Base64 y genera credentials.json
 const credentialsBase64 = process.env.GOOGLE_CREDENTIALS_BASE64;
@@ -78,7 +87,7 @@ app.post('/send-form', async (req, res) => {
     }
 });
 
-// Servidor corriendo
+// Iniciar el servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
