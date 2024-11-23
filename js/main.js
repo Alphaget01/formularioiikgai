@@ -53,9 +53,12 @@ document.getElementById('ikigai-form').addEventListener('submit', async function
         }
     });
 
+    // Determinar la URL del servidor (local o producción)
+    const serverUrl = window.location.origin + '/send-form';
+
     // Enviar datos al servidor Node.js
     try {
-        const response = await fetch('http://localhost:3000/send-form', {
+        const response = await fetch(serverUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
