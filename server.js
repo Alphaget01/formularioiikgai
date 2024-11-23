@@ -11,8 +11,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Servir archivos estáticos desde el directorio raíz (para CSS, JS, imágenes, etc.)
-app.use(express.static(path.join(__dirname)));
+// Servir archivos estáticos (CSS, JS, imágenes)
+app.use('/css', express.static(path.join(__dirname, 'Css')));
+app.use('/js', express.static(path.join(__dirname, 'js')));
+app.use('/images', express.static(path.join(__dirname))); // Si tienes imágenes en la raíz
 
 // Servir index.html en la raíz "/"
 app.get('/', (req, res) => {
