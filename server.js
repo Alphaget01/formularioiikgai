@@ -1,8 +1,8 @@
+require('dotenv').config(); // Cargar variables de entorno desde el archivo .env
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { google } = require('googleapis');
-const fs = require('fs');
 const path = require('path');
 
 const app = express();
@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Decodifica la credencial en Base64 y genera credentials.json
+// Decodificar y cargar las credenciales desde Base64
 const credentialsBase64 = process.env.GOOGLE_CREDENTIALS_BASE64;
 
 if (!credentialsBase64) {
@@ -29,18 +29,19 @@ if (!credentialsBase64) {
     process.exit(1);
 }
 
+let credentials;
 try {
-    const credentials = Buffer.from(credentialsBase64, 'base64').toString('utf-8');
-    fs.writeFileSync('credentials.json', credentials);
-    console.log('Archivo credentials.json creado exitosamente.');
+    // Decodificar la credencial en formato JSON
+    credentials = JSON.parse(Buffer.from(credentialsBase64, 'base64').toString('utf-8'));
+    console.log('Credenciales decodificadas correctamente.');
 } catch (error) {
-    console.error('Error al escribir el archivo credentials.json:', error.message);
+    console.error('Error al decodificar las credenciales en Base64:', error.message);
     process.exit(1);
 }
 
 // Configuración de autenticación para Google Sheets
 const auth = new google.auth.GoogleAuth({
-    keyFile: 'credentials.json', // Usará el archivo generado dinámicamente
+    credentials, // Usar las credenciales decodificadas directamente
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
