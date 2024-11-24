@@ -53,8 +53,12 @@ document.getElementById('ikigai-form').addEventListener('submit', async function
         }
     });
 
+    console.log("Datos enviados al servidor:", data); // Para verificar los datos recopilados en la consola
+
     // Determinar la URL del servidor (local o producción)
-    const serverUrl = window.location.origin + '/send-form';
+    const serverUrl = window.location.origin.includes('localhost')
+        ? 'http://localhost:3000/send-form'
+        : 'https://formularioikigai-5e081ec478ea.herokuapp.com/send-form';
 
     // Enviar datos al servidor Node.js
     try {
