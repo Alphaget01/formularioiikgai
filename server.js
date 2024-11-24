@@ -75,6 +75,7 @@ app.post('/send-form', async (req, res) => {
         ];
 
         console.log('Datos preparados para Google Sheets:', values);
+        console.log('Nombre del grupo recibido:', req.body.nombreGrupo);
 
         await sheets.spreadsheets.values.append({
             spreadsheetId,
