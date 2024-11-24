@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use('/css', express.static(path.join(__dirname, 'Css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/', express.static(path.join(__dirname))); // Sirve desde la raíz
+app.use('/', express.static(path.join(__dirname)));
 
 // Servir index.html en la raíz "/"
 app.get('/', (req, res) => {
@@ -32,7 +32,6 @@ if (!credentialsBase64) {
 
 let credentials;
 try {
-    // Decodificar la credencial en formato JSON
     credentials = JSON.parse(Buffer.from(credentialsBase64, 'base64').toString('utf-8'));
     console.log('Credenciales decodificadas correctamente.');
 } catch (error) {
@@ -51,10 +50,10 @@ const spreadsheetId = '1oWUwSU0YZ_oisBAJWCeyIHKyBrBviVKIoAEpuQOqAVc'; // Reempla
 
 // Ruta para manejar el envío del formulario
 app.post('/send-form', async (req, res) => {
-    console.log('Recibido en el servidor:', req.body); // Confirmar datos recibidos
+    console.log('Datos recibidos en el servidor:', req.body); // Confirmar datos recibidos
     try {
         const authClient = await auth.getClient();
-        console.log('Autenticación exitosa.');
+        console.log('Autenticación con Google Sheets exitosa.');
 
         const sheets = google.sheets({ version: 'v4', auth: authClient });
         console.log('Cliente de Google Sheets inicializado.');
@@ -66,25 +65,31 @@ app.post('/send-form', async (req, res) => {
             correo,
             obras,
             generos,
-            capitulos
+            capitulos,
         } = req.body;
-     
+
+        // Validar que los datos esenciales estén presentes
+        if (!grupo || !correo) {
+            throw new Error('El campo "grupo" o "correo" está vacío.');
+        }
+
+        // Preparar datos para agregar a Google Sheets
         const values = [
             [
-                new Date().toISOString(),
-                nombreGrupo || '',
-                grupo || '',
-                discord || '',
-                correo || '',
-                Array.isArray(obras) ? obras.join(', ') : obras || '',
-                Array.isArray(generos) ? generos.join(', ') : generos || '',
-                capitulos || '',
+                new Date().toISOString(), // Fecha en formato ISO
+                nombreGrupo || 'No especificado', // Nombre del grupo
+                grupo || 'No especificado', // Enlace al grupo
+                discord || 'No especificado', // Usuario de Discord
+                correo || 'No especificado', // Correo
+                Array.isArray(obras) ? obras.join(', ') : obras || 'No especificado', // Obras
+                Array.isArray(generos) ? generos.join(', ') : generos || 'No especificado', // Géneros
+                capitulos || 'No especificado', // Capítulos promedio
             ],
         ];
 
         console.log('Datos preparados para Google Sheets:', values);
-        console.log('Nombre del grupo recibido:', nombreGrupo);
 
+        // Agregar datos a la hoja
         await sheets.spreadsheets.values.append({
             spreadsheetId,
             range: 'Scans', // Nombre de la hoja
