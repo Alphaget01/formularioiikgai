@@ -48,6 +48,19 @@ const auth = new google.auth.GoogleAuth({
 // ID de la hoja de cálculo
 const spreadsheetId = '1oWUwSU0YZ_oisBAJWCeyIHKyBrBviVKIoAEpuQOqAVc'; // Reemplaza con tu ID de hoja de cálculo
 
+// Función para formatear la fecha a la zona horaria de Perú (UTC-5)
+function formatPeruTime(date) {
+    const peruOffset = -5 * 60; // UTC-5 en minutos
+    const peruTime = new Date(date.getTime() + peruOffset * 60000); // Ajuste de zona horaria
+    const day = String(peruTime.getDate()).padStart(2, '0');
+    const month = String(peruTime.getMonth() + 1).padStart(2, '0');
+    const year = peruTime.getFullYear();
+    const hours = String(peruTime.getHours()).padStart(2, '0');
+    const minutes = String(peruTime.getMinutes()).padStart(2, '0');
+    const seconds = String(peruTime.getSeconds()).padStart(2, '0');
+    return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+}
+
 // Ruta para manejar el envío del formulario
 app.post('/send-form', async (req, res) => {
     console.log('Datos recibidos en el servidor:', req.body); // Confirmar datos recibidos
@@ -76,7 +89,7 @@ app.post('/send-form', async (req, res) => {
         // Preparar datos para agregar a Google Sheets
         const values = [
             [
-                new Date().toISOString(), // Fecha en formato ISO
+                formatPeruTime(new Date()), // Fecha y hora en formato de Perú
                 nombreGrupo || 'No especificado', // Nombre del grupo
                 grupo || 'No especificado', // Enlace al grupo
                 discord || 'No especificado', // Usuario de Discord
