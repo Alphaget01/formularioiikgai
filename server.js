@@ -59,8 +59,16 @@ app.post('/send-form', async (req, res) => {
         const sheets = google.sheets({ version: 'v4', auth: authClient });
         console.log('Cliente de Google Sheets inicializado.');
 
-        const { nombreGrupo, grupo, discord, correo, obras, generos, capitulos } = req.body;
-
+        const {
+            'nombre-grupo': nombreGrupo,
+            grupo,
+            discord,
+            correo,
+            obras,
+            generos,
+            capitulos
+        } = req.body;
+     
         const values = [
             [
                 new Date().toISOString(),
@@ -75,7 +83,7 @@ app.post('/send-form', async (req, res) => {
         ];
 
         console.log('Datos preparados para Google Sheets:', values);
-        console.log('Nombre del grupo recibido:', req.body.nombreGrupo);
+        console.log('Nombre del grupo recibido:', nombreGrupo);
 
         await sheets.spreadsheets.values.append({
             spreadsheetId,
